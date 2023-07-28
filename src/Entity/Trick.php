@@ -26,6 +26,10 @@ class Trick
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creation_date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $id_category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +79,18 @@ class Trick
     public function setCreationDate(\DateTimeInterface $creation_date): static
     {
         $this->creation_date = $creation_date;
+
+        return $this;
+    }
+
+    public function getIdCategory(): ?Category
+    {
+        return $this->id_category;
+    }
+
+    public function setIdCategory(?Category $id_category): static
+    {
+        $this->id_category = $id_category;
 
         return $this;
     }
