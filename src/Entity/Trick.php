@@ -30,6 +30,9 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $id_category = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $illustration = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +94,18 @@ class Trick
     public function setIdCategory(?Category $id_category): static
     {
         $this->id_category = $id_category;
+
+        return $this;
+    }
+
+    public function getIllustration(): ?string
+    {
+        return $this->illustration;
+    }
+
+    public function setIllustration(string $illustration): static
+    {
+        $this->illustration = $illustration;
 
         return $this;
     }
