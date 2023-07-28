@@ -3,11 +3,11 @@
 {% block title %}Accueil - SnowTricks{% endblock %}
 
 {% block body %}
-<div class="container">
+<main class="container" id="main-content">
     <h1 class="text-center mt-3 mb-3">SnowTricks</h1>
 
     <div class="text-end">
-        <a class="d-inline-block btn btn-success mb-3" href="#">Ajouter un Trick</a>
+        <a class="d-inline-block btn btn-success mb-3" href="#"><i class="fas fa-plus text-white"></i> Ajouter un Trick</a>
     </div>
 
     <div class="row g-4 mb-3">
@@ -25,5 +25,5 @@
             </div>
         {% endfor %}
     </div>
-</div>
+</main>
 {% endblock %}
