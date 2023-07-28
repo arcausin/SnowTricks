@@ -8,13 +8,27 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="container">
+    <h1 class="text-center mt-3 mb-3">SnowTricks</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/SnowTricks/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/SnowTricks/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+    <div class="text-end">
+        <a class="d-inline-block btn btn-success mb-3" href="#">Ajouter un Trick</a>
+    </div>
+
+    <div class="row g-4 mb-3">
+        {% for trick in tricks %}
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="shadow rounded">
+                    <img class="img-fluid w-100 rounded-top" src="{{ trick.illustration }}" alt="{{ trick.name }}" />
+                    <div class="p-2">
+                        <p class="d-flex justify-content-between mb-0">
+                            <span>{{ trick.name }}</span>
+                            <span><a href="#"><i class="fas fa-edit text-warning"></i></a> <a href="#"><i class="fas fa-trash text-danger"></i></a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
