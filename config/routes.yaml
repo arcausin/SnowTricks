@@ -2,7 +2,7 @@ app_home:
     path: /
     controller: App\Controller\HomeController::index
 
-register:
+app_register:
     path: /inscription
     controller: App\Controller\RegistrationController::register
 
@@ -17,3 +17,15 @@ app_login:
 app_logout:
     path: /deconnexion
     controller: App\Controller\SecurityController::logout
+
+app_forgot_password_request:
+    path: /mot-de-passe-oublie
+    controller: App\Controller\ResetPasswordController::request
+
+app_check_email:
+    path: /mot-de-passe-oublie/verification-email
+    controller: App\Controller\ResetPasswordController::checkEmail
+
+app_reset_password:
+    path: /mot-de-passe-oublie/reinitialisation/{token}
+    controller: App\Controller\ResetPasswordController::reset
