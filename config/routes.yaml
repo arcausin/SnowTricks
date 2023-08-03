@@ -1,3 +1,11 @@
 index:
     path: /
     controller: App\Controller\HomeController::index
+
+register:
+    path: /inscription
+    controller: App\Controller\RegistrationController::register
+
+verify_email:
+    path: /verify/email
+    controller: App\Controller\RegistrationController::verifyUserEmail
