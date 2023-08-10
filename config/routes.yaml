@@ -1,3 +1,31 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+app_home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+app_register:
+    path: /inscription
+    controller: App\Controller\RegistrationController::register
+
+app_verify_email:
+    path: /verify/email
+    controller: App\Controller\RegistrationController::verifyUserEmail
+
+app_login:
+    path: /connexion
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: /deconnexion
+    controller: App\Controller\SecurityController::logout
+
+app_forgot_password_request:
+    path: /mot-de-passe-oublie
+    controller: App\Controller\ResetPasswordController::request
+
+app_check_email:
+    path: /mot-de-passe-oublie/verification-email
+    controller: App\Controller\ResetPasswordController::checkEmail
+
+app_reset_password:
+    path: /mot-de-passe-oublie/reinitialisation/{token}
+    controller: App\Controller\ResetPasswordController::reset
