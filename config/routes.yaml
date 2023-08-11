@@ -11,21 +11,45 @@ app_verify_email:
     controller: App\Controller\RegistrationController::verifyUserEmail
 
 app_login:
-    path: /connexion
+    path: /login
     controller: App\Controller\SecurityController::login
 
 app_logout:
-    path: /deconnexion
+    path: /logout
     controller: App\Controller\SecurityController::logout
 
 app_forgot_password_request:
-    path: /mot-de-passe-oublie
+    path: /forgot-password
     controller: App\Controller\ResetPasswordController::request
 
 app_check_email:
-    path: /mot-de-passe-oublie/verification-email
+    path: /forgot-password/verify/email
     controller: App\Controller\ResetPasswordController::checkEmail
 
 app_reset_password:
-    path: /mot-de-passe-oublie/reinitialisation/{token}
+    path: /forgot-password/reset-password/{token}
     controller: App\Controller\ResetPasswordController::reset
+
+app_trick_index:
+    path: /tricks
+    controller: App\Controller\TrickController::index
+
+app_trick_new:
+    path: /tricks/new
+    controller: App\Controller\TrickController::new
+
+#app_account:
+#    path: /mon-compte
+#    controller: App\Controller\AccountController::index
+#
+#app_account_edit:
+#    path: /mon-compte/modifier
+#    controller: App\Controller\AccountController::edit
+#
+#app_account_password:
+#    path: /mon-compte/modifier-mot-de-passe
+#    controller: App\Controller\AccountController::editPassword
+#
+#app_account_delete:
+#    path: /mon-compte/supprimer
+#    controller: App\Controller\AccountController::delete
