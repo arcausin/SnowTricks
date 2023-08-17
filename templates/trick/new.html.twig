@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Trick - SnowTricks{% endblock %}
+
+{% block body %}
+<h1 class="text-center fs-1 mt-5 mb-5">Create new Trick</h1>
+
+<div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+    <div class="text-center border shadow rounded-4 p-5">
+        {{ include('trick/_form.html.twig') }}
+
+        <a href="{{ path('app_trick_index') }}">back to list</a>
+    </div>
+</div>
+
+{% endblock %}
