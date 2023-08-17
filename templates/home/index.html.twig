@@ -19,7 +19,7 @@
     <div class="text-dark position-absolute bottom-0 end-0 me-3 mb-2 fs-1" id="scrollButton"><i class="fas fa-arrow-down"></i></div>
 </div>
 
-<div id="contentSection"></div>
+<div id="TrickSection"></div>
 
 <div class="container">
     <div class="row">
@@ -74,7 +74,13 @@
 </script>
 <script>
     document.getElementById('scrollButton').addEventListener('click', function () {
-        const contentSection = document.getElementById('contentSection');
+        const contentSection = document.getElementById('TrickSection');
+        contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+</script>
+<script>
+    document.getElementById('scrollMenu').addEventListener('click', function () {
+        const contentSection = document.getElementById('TrickSection');
         contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 </script>

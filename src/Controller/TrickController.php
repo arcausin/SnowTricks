@@ -19,9 +19,11 @@ class TrickController extends AbstractController
     #[Route('/', name: 'app_trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response
     {
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
-        ]);
+        return $this->redirectToRoute('app_home', ['_fragment' => 'TrickSection']);
+
+        //return $this->render('trick/index.html.twig', [
+        //    'tricks' => $trickRepository->findAll(),
+        //]);
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
