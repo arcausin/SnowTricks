@@ -15,11 +15,11 @@
         {{ form_widget(form.description, {'attr': {'class': 'form-control w-75 text-center mx-auto'}})}}
     </div>
 
-    <div class="form-group mb-3">
+    <div class="form-group mb-4">
         {{ form_label(form.category, 'Category', {'label_attr': {'class': 'form-label fs-3'}})}}
         {{ form_widget(form.category, {'attr': {'class': 'form-select w-75 text-center mx-auto'}})}}
     </div>
-
+    {#
     <div class="form-group mb-3">
         {{ form_label(form.createdAt, 'Created at', {'label_attr': {'class': 'form-label fs-3'}})}}
         {{ form_widget(form.createdAt, {'attr': {'class': 'form-control w-75 text-center mx-auto'}})}}
@@ -29,6 +29,16 @@
         {{ form_label(form.user, 'User', {'label_attr': {'class': 'form-label fs-3'}})}}
         {{ form_widget(form.user, {'attr': {'class': 'form-select w-75 text-center mx-auto'}})}}
     </div>
+    #}
 
-    <button class="btn text-white">{{ button_label|default('Save') }}</button>
+    {% if trick.illustration %}
+        <img class="shadow img-fluid rounded mb-4 col-12 col-md-10 col-lg-8" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
+    {% endif %}
+
+    <div class="form-group border rounded-4 mb-4">
+        {{ form_label(form.illustration, 'Illustration', {'label_attr': {'class': 'form-label fs-3 mb-3'}})}}
+        {{ form_widget(form.illustration, {'attr': {'class': 'custom-file-input w-75 text-center mx-auto mb-3'}})}}
+    </div>
+
+    <button class="btn btn-light mb-3">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

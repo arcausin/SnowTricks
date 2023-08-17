@@ -22,7 +22,7 @@
                 <td>{{ trick.id }}</td>
                 <td>{{ trick.name }}</td>
                 <td>{{ trick.description }}</td>
-                <td>{{ trick.illustration }}</td>
+                <td><img class="w-25" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt=""></td>
                 <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_trick_show', {'id': trick.id}) }}">show</a>
