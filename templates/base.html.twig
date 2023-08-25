@@ -59,7 +59,7 @@
                             </li>
                             {% if app.user %}
                             <li class="nav-item">
-                                <a href="{{ path('app_logout') }}" class="nav-link text-white animate-opacity pe-0">Logout</a>
+                                <a href="{{ path('app_logout') }}" class="nav-link text-white animate-opacity pe-0">Logout (<b>{{ app.user }}</b>)</a>
                             </li>
                             {% else %}
                             <li class="nav-item">
