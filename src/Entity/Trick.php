@@ -39,9 +39,13 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Media::class, orphanRemoval: true)]
+    private Collection $medias;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->medias = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,5 +158,35 @@ class Trick
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedias(): Collection
+    {
+        return $this->medias;
+    }
+
+    public function addMedia(Media $media): static
+    {
+        if (!$this->medias->contains($media)) {
+            $this->medias->add($media);
+            $media->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): static
+    {
+        if ($this->medias->removeElement($media)) {
+            // set the owning side to null (unless already changed)
+            if ($media->getTrick() === $this) {
+                $media->setTrick(null);
+            }
+        }
+
+        return $this;
     }
 }
