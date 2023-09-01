@@ -1,22 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Forgot Password - SnowTricks{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
+<h1 class="text-center fs-1 mt-5 mb-5">Forgot Password</h1>
+
+<div class="col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+    <div class="text-center border shadow rounded-4 p-5">
+        {% for flash_error in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
+        {% endfor %}
+        
+        {{ form_start(requestForm) }}
+            <div class="form-group mb-4">
+                {{ form_label(requestForm.email, 'Email', {'label_attr': {'class': 'form-label fs-3'}})}}
+                {{ form_widget(requestForm.email, {'attr': {'class': 'form-control w-75 text-center mx-auto'}})}}
+            </div>
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Enter your email address, and we will send you a
-                link to reset your password.
-            </small>
-        </div>
-
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+            <button class="btn btn-light mb-0">Ask for reset password</button>
+        {{ form_end(requestForm) }}
+    </div>
+</div>
 {% endblock %}

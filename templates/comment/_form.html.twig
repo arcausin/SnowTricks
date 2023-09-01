@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+    <div class="row text-center mx-auto d-flex justify-content-center align-items-center">
+        <div class="col-12 col-lg-6 form-group">
+            {{ form_widget(form.content, {'attr': {'class': 'form-control mb-3 mb-lg-0'}})}}
+        </div>
+
+        <div class="col-8 col-lg-3">
+            <button class="btn btn-light w-100">{{ button_label|default('Leave a comment') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}

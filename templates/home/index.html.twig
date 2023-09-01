@@ -1,20 +1,87 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}SnowTricks{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .bg-image {
+        background-image: url('https://images4.alphacoders.com/598/598152.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/SnowTricks/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/SnowTricks/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+<div class="text-center position-relative">
+    <div class="col-12 bg-image">
+    </div>
+    <div class="text-dark position-absolute bottom-0 end-0 me-3 mb-2 fs-1" id="scrollButton"><i class="fas fa-arrow-down"></i></div>
 </div>
+
+<div id="TrickSection"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-10 offset-md-1">
+            <h1 class="text-center mt-3 mb-3">SnowTricks</h1>
+
+            {% if app.user %}
+            <a href="{{ path('app_trick_new') }}"><span class="badge text-bg-success py-2 fs-6 mb-3"><i class="fas fa-plus"></i> Add Trick</span></a>
+            {% endif %}
+
+            <div class="row g-3 mb-3">
+            {% for trick in tricks %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="shadow rounded-3">
+                    <img class="shadow img-fluid rounded-top" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
+
+                    <div class="d-flex justify-content-between align-items-center p-3">
+                        <a class="text-white" href="{{ path('app_trick_show', {'id': trick.id}) }}">{{ trick.name }}</a>
+
+                        {% if app.user %}
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ path('app_trick_edit', {'id': trick.id}) }}"><span class="badge text-bg-warning py-2 me-3 fs-6"><i class="fas fa-edit"></i></span></a>
+
+                                {{ include('trick/_delete_form.html.twig') }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="text-center text-white mt-5 mb-5">
+                no tricks found
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let windowHeight = window.innerHeight;
+
+        let headerHeight = document.querySelector("#header-content").offsetHeight;
+
+        let imageHeight = windowHeight - headerHeight;
+
+        document.querySelector(".bg-image").style.minHeight = imageHeight + "px";
+    });
+</script>
+<script>
+    document.getElementById('scrollButton').addEventListener('click', function () {
+        const contentSection = document.getElementById('TrickSection');
+        contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+</script>
+<script>
+    document.getElementById('scrollMenu').addEventListener('click', function () {
+        const contentSection = document.getElementById('TrickSection');
+        contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+</script>
 {% endblock %}
