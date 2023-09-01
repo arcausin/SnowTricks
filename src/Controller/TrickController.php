@@ -4,8 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Entity\Comment;
+use App\Entity\Media;
+
 use App\Form\TrickType;
 use App\Form\CommentType;
+use App\Form\MediaType;
+
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Mime\MimeTypes;
 
 #[Route('/tricks')]
 class TrickController extends AbstractController
@@ -67,7 +72,8 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home');
+            $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+            return $this->redirect($targetUrl);
         }
 
         return $this->renderForm('trick/new.html.twig', [
@@ -76,12 +82,16 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Request $request, EntityManagerInterface $entityManager, Trick $trick): Response
+    #[Route('/{id}', name: 'app_trick_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, Trick $trick): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+
+        $media = new Media();
+        $formMedia = $this->createForm(MediaType::class, $media);
+        $formMedia->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$this->getUser() || $form->get('content')->getData() == '') {
@@ -101,10 +111,60 @@ class TrickController extends AbstractController
 
         }
 
+        if ($formMedia->isSubmitted() && $formMedia->isValid()) {
+            if (!$this->getUser() || $formMedia->get('link')->getData() == '') {
+                $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+                return $this->redirect($targetUrl);
+            }
+
+            $media->setCreatedAt(new \DateTimeImmutable());
+            $media->setTrick($trick);
+
+            $illustrationFile = $formMedia->get('link')->getData();
+            if ($illustrationFile) {
+                $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$illustrationFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $illustrationFile->move(
+                        $this->getParameter('illustrations_media_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $media->setLink($newFilename);
+                
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/tiff', 'image/bmp'];
+
+                if (in_array($illustrationFile->getClientMimeType(), $allowedMimeTypes)) {
+                    $media->setType(0);
+                } else {
+                    $media->setType(1);
+                }
+            }
+
+            $entityManager->persist($media);
+            $entityManager->flush();
+
+            $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+            return $this->redirect($targetUrl);
+
+        }
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+
             'comment' => $comment,
+            'media' => $media,
+
             'form' => $form->createView(),
+            'formMedia' => $formMedia->createView(),
         ]);
     }
 
@@ -147,7 +207,8 @@ class TrickController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home');
+            $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+            return $this->redirect($targetUrl);
         }
 
         return $this->renderForm('trick/edit.html.twig', [

@@ -1,0 +1,8 @@
+{{ form_start(formMedia) }}
+    <div class="form-group border rounded-4 mb-4">
+        {{ form_label(formMedia.link, 'Media', {'label_attr': {'class': 'form-label fs-3 mb-3'}})}}
+        {{ form_widget(formMedia.link, {'attr': {'class': 'custom-file-input w-75 text-center mx-auto mb-3'}})}}
+    </div>
+
+    <button class="btn btn-dark mb-3">{{ button_label|default('Save') }}</button>
+{{ form_end(formMedia) }}
