@@ -49,10 +49,7 @@
 
                                     {% if app.user %}
                                         <div class="p-1 position-absolute top-0 end-0">
-                                            <form method="post" action="{{ path('app_media_delete', {'id': media.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                                <button class="badge text-bg-danger py-2 fs-6 border-0"><i class="fas fa-trash"></i></button>
-                                            </form>
+                                            {{ include('media/_delete_form.html.twig') }}
                                         </div>
                                     {% endif %}
                                 </div>
@@ -72,10 +69,7 @@
 
                                     {% if app.user %}
                                         <div class="p-1 position-absolute top-0 end-0">
-                                            <form method="post" action="{{ path('app_media_delete', {'id': media.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
-                                                <button class="badge text-bg-danger py-2 fs-6 border-0"><i class="fas fa-trash"></i></button>
-                                            </form>
+                                            {{ include('media/_delete_form.html.twig') }}
                                         </div>
                                     {% endif %}
                                 </div>
@@ -113,18 +107,23 @@
 
             <div id="commentSection"></div>
 
-            {% if trick.comments|length != 0 %}
+            {% if comments|length != 0 %}
                 <h2 class="text-center mb-3">List of comments</h2>
 
-                {% for comment in trick.comments %}
-                    <div class="shadow mb-3">
-                        <div class="px-3 py-2">
-                            <p class="text-white-50 mb-0">
-                                <b>{{ comment.user }}</b> - {{ comment.createdAt|date('Y/m/d H:i')}}
-                            </p>
+                {% for comment in comments %}
+                    <div class="shadow rounded mb-3 row d-flex align-items-center">
+                        <div class="col-2">
+                            <img class="img-fluid rounded" src="{{ asset('img/default_avatar.png') }}" alt="">
                         </div>
-
-                        <div class="p-3">
+                        <div class="p-3 col-10">
+                            <div class="text-white-50 d-flex justify-content-between mb-0">
+                                <div><b>{{ comment.user }}</b> - {{ comment.createdAt|date('Y/m/d H:i')}}</div>
+                                {% if app.user %}
+                                    {% if app.user.id == comment.user.id %}
+                                        <div>{{ include('comment/_delete_form.html.twig') }}</div>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
                             <p class="mb-0"><b>{{ comment.content }}</b></p>
                         </div>
                     </div>

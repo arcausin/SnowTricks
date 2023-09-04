@@ -157,8 +157,15 @@ class TrickController extends AbstractController
 
         }
 
+        $comments = $trick->getComments()->toArray();
+        usort($comments, function($a, $b) {
+            return $b->getCreatedAt() <=> $a->getCreatedAt();
+        });
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+
+            'comments' => $comments,
 
             'comment' => $comment,
             'media' => $media,
