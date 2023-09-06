@@ -80,16 +80,17 @@ class ResetPasswordController extends AbstractController
     #[Route('/reset-password/{token}', name: 'app_reset_password')]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_home');
-        }
-        
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
 
-            return $this->redirectToRoute('app_reset_password');
+            // ===== AUCUNE DES DEUX REDIRECTIONS NE SEMBLE FONTIONNER CORRECTEMENT =====
+
+            //return $this->redirectToRoute('app_reset_password');
+
+            //$targetUrl = $this->generateUrl('app_reset_password', ['token' => $token]);
+            //return $this->redirect($targetUrl);
         }
 
         $token = $this->getTokenFromSession();
@@ -129,7 +130,7 @@ class ResetPasswordController extends AbstractController
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('reset_password/reset.html.twig', [

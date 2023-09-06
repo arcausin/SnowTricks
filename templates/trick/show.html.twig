@@ -19,7 +19,7 @@
                 {% endif %}
             </div>
 
-            <img class="shadow img-fluid mb-3" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
+            <img class="shadow img-fluid w-100 mb-3" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
 
             {% if app.user %}
             <button type="button" class="badge text-bg-success py-2 fs-6 border-0 mb-3" data-bs-toggle="modal"
@@ -48,7 +48,7 @@
                 {% if media.type == 0 %}
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="position-relative">
-                        <img class="shadow img-fluid" src="{{ asset('uploads/medias/' ~ media.link) }}" alt="">
+                        <img class="shadow img-fluid w-100" src="{{ asset('uploads/medias/' ~ media.link) }}" alt="">
 
                         {% if app.user %}
                         <div class="p-1 position-absolute top-0 end-0">
@@ -66,7 +66,7 @@
                 {% if media.type == 1 %}
                 <div class="col-12 col-lg-6">
                     <div class="position-relative">
-                        <video class="img-fluid" controls>
+                        <video class="img-fluid w-100" controls>
                             <source src="{{ asset('uploads/medias/' ~ media.link) }}">
                         </video>
 
@@ -119,10 +119,10 @@
             <div class="shadow rounded mb-3 row">
                 <div class="col-2 col-lg-1">
                     {% if comment.user.illustration %}
-                    <img class="img-fluid pt-3" src="{{ asset('uploads/profiles/' ~ comment.user.illustration) }}"
+                    <img class="img-fluid w-100 pt-3" src="{{ asset('uploads/profiles/' ~ comment.user.illustration) }}"
                         alt="">
                     {% else %}
-                    <img class="img-fluid pt-3" src="{{ asset('img/default_avatar.png') }}" alt="">
+                    <img class="img-fluid w-100 pt-3" src="{{ asset('img/default_avatar.png') }}" alt="">
                     {% endif %}
                 </div>
                 <div class="p-3 col-10 col-lg-11">

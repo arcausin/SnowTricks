@@ -34,7 +34,7 @@
             {% for trick in tricks %}
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="shadow rounded-3">
-                    <img class="shadow img-fluid rounded-top" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
+                    <img class="shadow img-fluid w-100 rounded-top" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
 
                     <div class="d-flex justify-content-between align-items-center p-3">
                         <a class="text-white" href="{{ path('app_trick_show', {'id': trick.id}) }}">{{ trick.name }}</a>
