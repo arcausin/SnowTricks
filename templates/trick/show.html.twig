@@ -115,33 +115,42 @@
             <div id="commentSection"></div>
 
             {% if comments|length != 0 %}
-            <h2 class="text-center mb-3">List of comments</h2>
+                <h2 class="text-center mb-3">List of comments</h2>
 
-            {% for comment in comments %}
-            <div class="shadow rounded mb-3 row">
-                <div class="col-2 col-lg-1">
-                    {% if comment.user.illustration %}
-                    <img class="img-fluid w-100 pt-3" src="{{ asset('uploads/profiles/' ~ comment.user.illustration) }}"
-                        alt="">
-                    {% else %}
-                    <img class="img-fluid w-100 pt-3" src="{{ asset('img/default_avatar.png') }}" alt="">
-                    {% endif %}
-                </div>
-                <div class="p-3 col-10 col-lg-11">
-                    <div class="text-white-50 d-flex justify-content-between mb-0">
-                        <div><b>{{ comment.user }}</b> - {{ comment.createdAt|date('Y/m/d H:i')}}</div>
-                        {% if app.user %}
-                            {% if app.user.id == comment.user.id %}
-                            <div>{{ include('comment/_delete_form.html.twig') }}</div>
-                            {% endif %}
+                {% for comment in comments %}
+                <div class="shadow rounded mb-3 row">
+                    <div class="col-2 col-lg-1">
+                        {% if comment.user.illustration %}
+                        <img class="img-fluid w-100 pt-3" src="{{ asset('uploads/profiles/' ~ comment.user.illustration) }}"
+                            alt="">
+                        {% else %}
+                        <img class="img-fluid w-100 pt-3" src="{{ asset('img/default_avatar.png') }}" alt="">
                         {% endif %}
                     </div>
-                    <p class="mb-0"><b>{{ comment.content }}</b></p>
+                    <div class="p-3 col-10 col-lg-11">
+                        <div class="text-white-50 d-flex justify-content-between mb-0">
+                            <div><b>{{ comment.user }}</b> - {{ comment.createdAt|date('Y/m/d H:i')}}</div>
+                            {% if app.user %}
+                                {% if app.user.id == comment.user.id %}
+                                <div>{{ include('comment/_delete_form.html.twig') }}</div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <p class="mb-0"><b>{{ comment.content }}</b></p>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+
+                {% if loadMoreComments %}
+                    <form method="post" action="{{ path('app_trick_show', {'slug': trick.slug}) }}">
+                        <input type="hidden" name="commentsLoad" value="{{ commentsLoad }}">
+                        <div class="text-center mb-3">
+                            <button class="btn btn-outline-light py-2" name="submitLoadMoreComments">Load more</button>
+                        </div>
+                    </form>
+                {% endif %}
             {% else %}
-            <h2 class="text-center mb-3">No comments found</h2>
+                <h2 class="text-center mb-3">No comments found</h2>
             {% endif %}
         </div>
     </div>

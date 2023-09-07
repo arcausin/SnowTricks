@@ -158,10 +158,24 @@ class TrickController extends AbstractController
 
         }
 
-        $comments = $trick->getComments()->toArray();
-        usort($comments, function($a, $b) {
-            return $b->getCreatedAt() <=> $a->getCreatedAt();
-        });
+        $commentsLoad = 2;
+
+        // process load more comments button
+        if ($request->request->get('submitLoadMoreComments') !== null) {
+            $commentsLoad = $request->request->get('commentsLoad');
+            $commentsLoad = $commentsLoad + 2;
+        }
+
+        // display load more comments bouton or not
+        $commentsCount = $entityManager->getRepository(Comment::class)->count(['trick' => $trick]);
+        $commentsCount -= $commentsLoad;
+        if ($commentsCount > 0) {
+            $loadMoreComments = true;
+        } else {
+            $loadMoreComments = false;
+        }
+
+        $comments = $entityManager->getRepository(Comment::class)->findCommentsByTrick($trick, $commentsLoad);
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
@@ -170,6 +184,9 @@ class TrickController extends AbstractController
 
             'comment' => $comment,
             'media' => $media,
+
+            'loadMoreComments' => $loadMoreComments,
+            'commentsLoad' => $commentsLoad,
 
             'form' => $form->createView(),
             'formMedia' => $formMedia->createView(),
