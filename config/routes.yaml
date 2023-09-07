@@ -50,18 +50,14 @@ app_trick_delete:
     path: /tricks/{id}/delete
     controller: App\Controller\TrickController::delete
 
-#app_account:
-#    path: /mon-compte
-#    controller: App\Controller\AccountController::index
-#
-#app_account_edit:
-#    path: /mon-compte/modifier
-#    controller: App\Controller\AccountController::edit
-#
-#app_account_password:
-#    path: /mon-compte/modifier-mot-de-passe
-#    controller: App\Controller\AccountController::editPassword
-#
-#app_account_delete:
-#    path: /mon-compte/supprimer
-#    controller: App\Controller\AccountController::delete
+app_profile_edit:
+    path: /profile/edit
+    controller: App\Controller\ProfileController::edit
+
+app_media_delete:
+    path: /media/{id}/delete
+    controller: App\Controller\MediaController::delete
+
+app_comment_delete:
+    path: /comment/{id}/delete
+    controller: App\Controller\CommentController::delete

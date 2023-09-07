@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/media')]
 class MediaController extends AbstractController
 {
-    #[Route('/{id}', name: 'app_media_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_media_delete', methods: ['POST'])]
     public function delete(Request $request, Media $media, EntityManagerInterface $entityManager): Response
     {
         if (!$this->getUser()) {

@@ -27,10 +27,6 @@ class TrickController extends AbstractController
     public function index(TrickRepository $trickRepository): Response
     {
         return $this->redirectToRoute('app_home', ['_fragment' => 'TrickSection']);
-
-        //return $this->render('trick/index.html.twig', [
-        //    'tricks' => $trickRepository->findAll(),
-        //]);
     }
 
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
@@ -224,7 +220,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_trick_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if (!$this->getUser()) {
@@ -233,6 +229,18 @@ class TrickController extends AbstractController
 
         // Delete illustration file if it exists
         $this->deleteIllustrationFile($trick);
+
+        // Delete all media files if they exist
+        $medias = $trick->getMedias()->toArray();
+        foreach ($medias as $media) {
+            $oldFilename = $media->getLink();
+            if ($oldFilename) {
+                $filePath = $this->getParameter('illustrations_media_directory') . '/' . $oldFilename;
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+        }
         
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $entityManager->remove($trick);
