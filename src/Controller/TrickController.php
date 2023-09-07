@@ -229,6 +229,18 @@ class TrickController extends AbstractController
 
         // Delete illustration file if it exists
         $this->deleteIllustrationFile($trick);
+
+        // Delete all media files if they exist
+        $medias = $trick->getMedias()->toArray();
+        foreach ($medias as $media) {
+            $oldFilename = $media->getLink();
+            if ($oldFilename) {
+                $filePath = $this->getParameter('illustrations_media_directory') . '/' . $oldFilename;
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+        }
         
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
             $entityManager->remove($trick);
