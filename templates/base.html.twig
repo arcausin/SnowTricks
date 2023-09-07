@@ -67,21 +67,21 @@
                         </li>
                         {% if app.user %}
                         <li class="nav-item">
-                            <a href="{{ path('app_logout') }}" class="nav-link text-white animate-opacity">Logout</a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ path('app_profile_edit') }}" class="nav-link text-white animate-opacity"><b>{{ app.user }}</b></a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_profile_edit') }}" class="nav-link text-white animate-opacity pe-0">
+                            <a href="{{ path('app_profile_edit') }}" class="nav-link text-white animate-opacity">
                                 {% if app.user.illustration %}
-                                <img class="img-fluid w-100 pe-0" src="{{ asset('uploads/profiles/' ~ app.user.illustration) }}"
+                                <img class="img-fluid w-100" src="{{ asset('uploads/profiles/' ~ app.user.illustration) }}"
                                     alt="" style="height: 35px;">
                                 {% else %}
-                                <img class="img-fluid w-100 pe-0" src="{{ asset('uploads/profiles/default_avatar.png') }}" alt=""
+                                <img class="img-fluid w-100" src="{{ asset('uploads/profiles/default_avatar.png') }}" alt=""
                                     style="height: 35px;">
                                 {% endif %}
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('app_logout') }}" class="nav-link text-white animate-opacity pe-0">Logout</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
