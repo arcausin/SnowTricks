@@ -11,7 +11,7 @@
 
                 {% if app.user %}
                 <div class="d-flex justify-content-between">
-                    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}"><span
+                    <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><span
                             class="badge text-bg-warning py-2 me-3 fs-6"><i class="fas fa-edit"></i></span></a>
 
                     {{ include('trick/_delete_form.html.twig') }}
@@ -93,11 +93,13 @@
             </div>
 
             <div class="text-center text-white mb-3">
-                <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-snowboarding"></i> {{ trick.category
-                    }}</span>
+                <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-snowboarding"></i> {{ trick.category }}</span>
                 <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-user"></i> {{ trick.user }}</span>
-                <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{
-                    trick.createdAt|date('d/m/Y') }}</span>
+                {% if trick.updatedAt %}
+                    <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{ trick.updatedAt|date('d/m/Y') }}</span>
+                {% else %}
+                    <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{ trick.createdAt|date('d/m/Y') }}</span>
+                {% endif %}
             </div>
 
             <hr>

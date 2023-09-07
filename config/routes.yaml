@@ -39,15 +39,15 @@ app_trick_new:
     controller: App\Controller\TrickController::new
 
 app_trick_show:
-    path: /tricks/{id}
+    path: /tricks/{slug}
     controller: App\Controller\TrickController::show
 
 app_trick_edit:
-    path: /tricks/{id}/edit
+    path: /tricks/{slug}/edit
     controller: App\Controller\TrickController::edit
 
 app_trick_delete:
-    path: /tricks/{id}/delete
+    path: /tricks/{slug}/delete
     controller: App\Controller\TrickController::delete
 
 app_profile_edit:

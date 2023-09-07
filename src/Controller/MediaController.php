@@ -29,7 +29,7 @@ class MediaController extends AbstractController
             $entityManager->flush();
         }
 
-        $targetUrl = $this->generateUrl('app_trick_show', ['id' => $media->getTrick()->getId()]);
+        $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $media->getTrick()->getSlug()]);
         return $this->redirect($targetUrl);
     }
 

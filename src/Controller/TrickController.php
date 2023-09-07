@@ -43,6 +43,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setCreatedAt(new \DateTimeImmutable());
             $trick->setUser($this->getUser());
+            $trick->setSlug($slugger->slug(strtolower($trick->getName())));
 
             $illustrationFile = $form->get('illustration')->getData();
             if ($illustrationFile) {
@@ -68,7 +69,7 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+            $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
             return $this->redirect($targetUrl);
         }
 
@@ -78,7 +79,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_trick_show', methods: ['GET', 'POST'])]
+    #[Route('/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
     public function show(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, Trick $trick): Response
     {
         $comment = new Comment();
@@ -91,7 +92,7 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$this->getUser() || $form->get('content')->getData() == '') {
-                $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+                $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
                 return $this->redirect($targetUrl);
             }
 
@@ -102,14 +103,14 @@ class TrickController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]) . '#commentSection';
+            $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]) . '#commentSection';
             return $this->redirect($targetUrl);
 
         }
 
         if ($formMedia->isSubmitted() && $formMedia->isValid()) {
             if (!$this->getUser() || $formMedia->get('link')->getData() == '') {
-                $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+                $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
                 return $this->redirect($targetUrl);
             }
 
@@ -148,7 +149,11 @@ class TrickController extends AbstractController
             $entityManager->persist($media);
             $entityManager->flush();
 
-            $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+            // update the trick last modification date when adding media
+            $trick->setUpdatedAt(new \DateTimeImmutable());
+            $entityManager->flush();
+
+            $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
             return $this->redirect($targetUrl);
 
         }
@@ -171,7 +176,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
+    #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         if (!$this->getUser()) {
@@ -182,7 +187,8 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$trick->setCreatedAt(new \DateTimeImmutable());
+            $trick->setUpdatedAt(new \DateTimeImmutable());
+            $trick->setSlug($slugger->slug(strtolower($trick->getName())));
 
             $illustrationFile = $form->get('illustration')->getData();
             if ($illustrationFile) {
@@ -210,7 +216,7 @@ class TrickController extends AbstractController
 
             $entityManager->flush();
 
-            $targetUrl = $this->generateUrl('app_trick_show', ['id' => $trick->getId()]);
+            $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
             return $this->redirect($targetUrl);
         }
 
@@ -220,7 +226,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_trick_delete', methods: ['POST'])]
+    #[Route('/{slug}/delete', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if (!$this->getUser()) {
