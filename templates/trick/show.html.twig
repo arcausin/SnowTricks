@@ -22,8 +22,7 @@
             <img class="shadow img-fluid w-100 mb-3" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
 
             {% if app.user %}
-            <button type="button" class="badge text-bg-success py-2 fs-6 border-0 mb-3" data-bs-toggle="modal"
-                data-bs-target="#addMediaModal"><i class="fas fa-plus"></i> Add Media</button>
+            <button type="button" class="badge text-bg-success py-2 fs-6 border-0 mb-3" data-bs-toggle="modal" data-bs-target="#addMediaModal"><i class="fas fa-plus"></i> Add Media</button>
 
             <!-- Modal -->
             <div class="modal fade" id="addMediaModal" tabindex="-1" aria-labelledby="addMediaModalLabel"
@@ -42,7 +41,11 @@
             </div>
             {% endif %}
 
-            <div class="row g-3 mb-3">
+            <div class="text-center">
+                <button type="button" class="badge text-bg-light py-2 fs-6 border-0 mb-3 d-md-none" id="toggleButton">See medias</button>
+            </div>
+
+            <div class="row g-3 mb-3 d-none d-md-flex" id="mediasContent">
                 {% if trick.medias|length != 0 %}
                 {% for media in trick.medias %}
                 {% if media.type == 0 %}
@@ -155,4 +158,27 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const afficherDivButton = document.getElementById("toggleButton");
+        const maDiv = document.getElementById("mediasContent");
+    
+        afficherDivButton.addEventListener("click", function () {
+            maDiv.classList.toggle("d-none"); // bascule la classe d-none
+        });
+
+        // Change button text
+        ContentButton = document.getElementById("toggleButton");
+        ContentButton.addEventListener("click", function () {
+            if (ContentButton.innerHTML == "See medias") {
+                ContentButton.innerHTML = "Hide medias";
+            } else {
+                ContentButton.innerHTML = "See medias";
+            }
+        });
+    });
+</script>
 {% endblock %}
