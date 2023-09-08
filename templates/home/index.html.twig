@@ -16,7 +16,8 @@
 <div class="text-center position-relative">
     <div class="col-12 bg-image">
     </div>
-    <div class="text-dark position-absolute bottom-0 end-0 me-3 mb-2 fs-1" id="scrollButton"><i class="fas fa-arrow-down"></i></div>
+    <div class="text-dark position-absolute bottom-0 end-0 me-3 mb-2 fs-1" id="scrollButton"><i
+            class="fas fa-arrow-down"></i></div>
 </div>
 
 <div id="TrickSection"></div>
@@ -27,33 +28,46 @@
             <h1 class="text-center mt-3 mb-3">SnowTricks</h1>
 
             {% if app.user %}
-            <a href="{{ path('app_trick_new') }}"><span class="badge text-bg-success py-2 fs-6 mb-3"><i class="fas fa-plus"></i> Add Trick</span></a>
+            <a href="{{ path('app_trick_new') }}"><span class="badge text-bg-success py-2 fs-6 mb-3"><i
+                        class="fas fa-plus"></i> Add Trick</span></a>
             {% endif %}
 
             <div class="row g-3 mb-3">
-            {% for trick in tricks %}
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="shadow rounded-3">
-                    <img class="shadow img-fluid w-100 rounded-top" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
+                {% for trick in tricks %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="shadow rounded-3">
+                        <img class="shadow img-fluid w-100 rounded-top"
+                            src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
 
-                    <div class="d-flex justify-content-between align-items-center p-3">
-                        <a class="text-white" href="{{ path('app_trick_show', {'slug': trick.slug}) }}">{{ trick.name }}</a>
+                        <div class="d-flex justify-content-between align-items-center p-3">
+                            <a class="text-white" href="{{ path('app_trick_show', {'slug': trick.slug}) }}">{{
+                                trick.name }}</a>
 
-                        {% if app.user %}
+                            {% if app.user %}
                             <div class="d-flex justify-content-between">
-                                <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><span class="badge text-bg-warning py-2 me-3 fs-6"><i class="fas fa-edit"></i></span></a>
+                                <a href="{{ path('app_trick_edit', {'slug': trick.slug}) }}"><span
+                                        class="badge text-bg-warning py-2 me-3 fs-6"><i
+                                            class="fas fa-edit"></i></span></a>
 
                                 {{ include('trick/_delete_form.html.twig') }}
                             </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% else %}
-            <div class="text-center text-white mt-5 mb-5">
-                no tricks found
-            </div>
-            {% endfor %}
+                {% else %}
+                <div class="text-center text-white mt-5 mb-5">
+                    no tricks found
+                </div>
+                {% endfor %}
+                {% if loadMoreTricks %}
+                    <form method="post" action="{{ path('app_home') }}">
+                        <input type="hidden" name="tricksLoad" value="{{ tricksLoad }}">
+                        <div class="text-center mb-3">
+                            <button class="btn btn-outline-light py-2" name="submitLoadMoreTricks">Load more</button>
+                        </div>
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>

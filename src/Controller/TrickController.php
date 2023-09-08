@@ -158,21 +158,19 @@ class TrickController extends AbstractController
 
         }
 
-        $commentsLoad = 2;
+        $commentsLoad = 10;
 
         // process load more comments button
         if ($request->request->get('submitLoadMoreComments') !== null) {
             $commentsLoad = $request->request->get('commentsLoad');
-            $commentsLoad = $commentsLoad + 2;
+            $commentsLoad = $commentsLoad + 10;
         }
 
         // display load more comments bouton or not
-        $commentsCount = $entityManager->getRepository(Comment::class)->count(['trick' => $trick]);
-        $commentsCount -= $commentsLoad;
-        if ($commentsCount > 0) {
-            $loadMoreComments = true;
-        } else {
+        if ($commentsLoad >= $entityManager->getRepository(Comment::class)->NumberCommentsByTrick($trick)) {
             $loadMoreComments = false;
+        } else {
+            $loadMoreComments = true;
         }
 
         $comments = $entityManager->getRepository(Comment::class)->findCommentsByTrick($trick, $commentsLoad);
