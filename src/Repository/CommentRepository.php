@@ -35,7 +35,7 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     // return the number of comments for a trick
-    public function NumberCommentsByTrick($trick)
+    public function numberCommentsByTrick($trick)
     {
         return $this->createQueryBuilder('c')
             ->select('count(c)')

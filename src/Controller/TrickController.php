@@ -167,7 +167,7 @@ class TrickController extends AbstractController
         }
 
         // display load more comments bouton or not
-        if ($commentsLoad >= $entityManager->getRepository(Comment::class)->NumberCommentsByTrick($trick)) {
+        if ($commentsLoad >= $entityManager->getRepository(Comment::class)->numberCommentsByTrick($trick)) {
             $loadMoreComments = false;
         } else {
             $loadMoreComments = true;
