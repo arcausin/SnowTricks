@@ -22,7 +22,7 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     // select a number of comments for a trick in descending order
-    public function findCommentsByTrick($trick, $limit)
+    public function findCommentsByTrick($trick, $limit): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.trick = :trick')
@@ -35,7 +35,7 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     // return the number of comments for a trick
-    public function numberCommentsByTrick($trick)
+    public function numberCommentsByTrick($trick): int
     {
         return $this->createQueryBuilder('c')
             ->select('count(c)')
