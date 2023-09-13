@@ -61,3 +61,7 @@ app_media_delete:
 app_comment_delete:
     path: /comment/{id}/delete
     controller: App\Controller\CommentController::delete
+
+exception_error:
+    path: /error
+    controller: App\Controller\ExceptionController::showError
