@@ -80,8 +80,10 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, Trick $trick): Response
+    public function show(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, $slug): Response
     {
+        $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
@@ -192,11 +194,13 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, $slug): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
+
+        $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -242,11 +246,13 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/delete', name: 'app_trick_delete', methods: ['POST'])]
-    public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, EntityManagerInterface $entityManager, $slug): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
+
+        $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
         // Delete illustration file if it exists
         $this->deleteIllustrationFile($trick);
