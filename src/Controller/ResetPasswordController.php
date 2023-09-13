@@ -88,13 +88,6 @@ class ResetPasswordController extends AbstractController
             // We store the token in session and remove it from the URL, to avoid the URL being
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
-
-            // ===== AUCUNE DES DEUX REDIRECTIONS NE SEMBLE FONTIONNER CORRECTEMENT =====
-
-            //return $this->redirectToRoute('app_reset_password');
-
-            //$targetUrl = $this->generateUrl('app_reset_password', ['token' => $token]);
-            //return $this->redirect($targetUrl);
         }
 
         $token = $this->getTokenFromSession();
