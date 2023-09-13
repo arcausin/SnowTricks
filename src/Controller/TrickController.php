@@ -80,7 +80,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, $slug): Response
+    public function show(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, string $slug): Response
     {
         $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
@@ -194,7 +194,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, $slug): Response
+    public function edit(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, string $slug): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_home');
@@ -246,7 +246,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}/delete', name: 'app_trick_delete', methods: ['POST'])]
-    public function delete(Request $request, EntityManagerInterface $entityManager, $slug): Response
+    public function delete(Request $request, EntityManagerInterface $entityManager, string $slug): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_home');

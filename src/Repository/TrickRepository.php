@@ -22,7 +22,7 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     // select a number of tricks in last updated order
-    public function findTricks($limit): array
+    public function findTricks(int $limit): array
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.updated_at', 'DESC')
