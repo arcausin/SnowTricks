@@ -17,11 +17,11 @@ class CommentController extends AbstractController
     #[Route('/{id}/delete', name: 'app_comment_delete', methods: ['POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository, int $id): Response
     {
+        $comment = $commentRepository->find($id);
+
         if (!$this->getUser() || $this->getUser() !== $comment->getUser()) {
             return $this->redirectToRoute('app_home');
         }
-
-        $comment = $commentRepository->find($id);
 
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $entityManager->remove($comment);
