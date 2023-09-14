@@ -22,7 +22,7 @@ class TrickRepository extends ServiceEntityRepository
     }
 
     // select a number of tricks in last updated order
-    public function findTricks($limit)
+    public function findTricks(int $limit): array
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.updated_at', 'DESC')
@@ -31,29 +31,4 @@ class TrickRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-//    /**
-//     * @return Trick[] Returns an array of Trick objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Trick
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

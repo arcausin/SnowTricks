@@ -22,7 +22,7 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     // select a number of comments for a trick in descending order
-    public function findCommentsByTrick($trick, $limit)
+    public function findCommentsByTrick(object $trick, int $limit): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.trick = :trick')
@@ -35,7 +35,7 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     // return the number of comments for a trick
-    public function NumberCommentsByTrick($trick)
+    public function numberCommentsByTrick(object $trick): int
     {
         return $this->createQueryBuilder('c')
             ->select('count(c)')
@@ -45,29 +45,4 @@ class CommentRepository extends ServiceEntityRepository
             ->getSingleScalarResult()
         ;
     }
-
-//    /**
-//     * @return Comment[] Returns an array of Comment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Comment
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

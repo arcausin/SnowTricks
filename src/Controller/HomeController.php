@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
     public function index(Request $request, TrickRepository $trickRepository): Response
     {
         $tricksLoad = 9;

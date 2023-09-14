@@ -14,12 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/media')]
 class MediaController extends AbstractController
 {
-    #[Route('/{id}/delete', name: 'app_media_delete', methods: ['POST'])]
-    public function delete(Request $request, Media $media, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_media_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager, MediaRepository $mediaRepository, int $id): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
+
+        $media = $mediaRepository->find($id);
 
         // Delete illustration file if it exists
         $this->deleteIllustrationFile($media);
