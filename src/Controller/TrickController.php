@@ -245,7 +245,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/delete', name: 'app_trick_delete', methods: ['POST'])]
+    #[Route('/{slug}/delete', name: 'app_trick_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, string $slug): Response
     {
         if (!$this->getUser()) {

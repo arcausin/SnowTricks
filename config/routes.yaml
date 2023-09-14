@@ -1,67 +1,84 @@
 app_home:
     path: /
+    methods: GET|POST
     controller: App\Controller\HomeController::index
 
 app_register:
     path: /registration
+    methods: GET|POST
     controller: App\Controller\RegistrationController::register
 
 app_verify_email:
     path: /verify/email
+    methods: GET
     controller: App\Controller\RegistrationController::verifyUserEmail
 
 app_login:
     path: /login
+    methods: GET|POST
     controller: App\Controller\SecurityController::login
 
 app_logout:
     path: /logout
+    methods: GET
     controller: App\Controller\SecurityController::logout
 
 app_forgot_password_request:
     path: /forgot-password
+    methods: GET|POST
     controller: App\Controller\ResetPasswordController::request
 
 app_check_email:
     path: /forgot-password/verify/email
+    methods: GET
     controller: App\Controller\ResetPasswordController::checkEmail
 
 app_reset_password:
     path: /forgot-password/reset-password/{token}
+    methods: GET|POST
     controller: App\Controller\ResetPasswordController::reset
 
 app_trick_index:
     path: /tricks
+    methods: GET
     controller: App\Controller\TrickController::index
 
 app_trick_new:
     path: /tricks/new
+    methods: GET|POST
     controller: App\Controller\TrickController::new
 
 app_trick_show:
     path: /tricks/{slug}
+    methods: GET|POST
     controller: App\Controller\TrickController::show
 
 app_trick_edit:
     path: /tricks/{slug}/edit
+    methods: GET|POST
     controller: App\Controller\TrickController::edit
 
 app_trick_delete:
     path: /tricks/{slug}/delete
+    methods: GET|POST
     controller: App\Controller\TrickController::delete
 
 app_profile_edit:
     path: /profile/edit
+    methods: GET|POST
     controller: App\Controller\ProfileController::edit
 
 app_media_delete:
     path: /media/{id}/delete
+    methods: GET|POST
     controller: App\Controller\MediaController::delete
 
 app_comment_delete:
     path: /comment/{id}/delete
+    methods: GET|POST
     controller: App\Controller\CommentController::delete
 
 exception_error:
     path: /error
+    methods: GET|POST
     controller: App\Controller\ExceptionController::showError

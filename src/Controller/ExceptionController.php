@@ -9,7 +9,7 @@ use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class ExceptionController extends AbstractController
 {
-    #[Route('/error', name: 'exception_error')]
+    #[Route('/error', name: 'exception_error', methods: ['GET', 'POST'])]
     public function showError(FlattenException $exception): Response
     {
         // Vous pouvez accéder à l'exception et personnaliser la réponse en conséquence.
@@ -18,7 +18,7 @@ class ExceptionController extends AbstractController
             return $this->render('errors/404.html.twig', []);
         } elseif ($exception->getStatusCode() == 500) {
             // Gérer l'erreur 500, par exemple, en rendant un template Twig.
-            return $this->render('errors/500.html.twig', ['test' => $exception->getMessage()]);
+            return $this->render('errors/500.html.twig', []);
         }
 
         // Par défaut, renvoyer une réponse générique pour d'autres erreurs.
