@@ -99,9 +99,9 @@
                 <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-snowboarding"></i> {{ trick.category }}</span>
                 <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-user"></i> {{ trick.user }}</span>
                 {% if trick.updatedAt %}
-                    <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{ trick.updatedAt|date('d/m/Y') }}</span>
+                    <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{ trick.updatedAt|date('m/d/Y') }}</span>
                 {% else %}
-                    <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{ trick.createdAt|date('d/m/Y') }}</span>
+                    <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{ trick.createdAt|date('m/d/Y') }}</span>
                 {% endif %}
             </div>
 
@@ -132,7 +132,7 @@
                     </div>
                     <div class="p-3 col-10 col-lg-11">
                         <div class="text-white-50 d-flex justify-content-between mb-0">
-                            <div><b>{{ comment.user }}</b> - {{ comment.createdAt|date('Y/m/d H:i')}}</div>
+                            <div><b>{{ comment.user }}</b> - {{ comment.createdAt|date('m/d/Y H:i')}}</div>
                             {% if app.user %}
                                 {% if app.user.id == comment.user.id %}
                                 <div>{{ include('comment/_delete_form.html.twig') }}</div>
