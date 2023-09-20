@@ -7,6 +7,8 @@ git clone https://github.com/arcausin/SnowTricks.git
 
 2. Configurer les variables d'environnement de base de données et serveur SMTP dans le fichier ".env.local" à la racine du projet dériver du fichier ".env"  
 
+### ouvrer une invite de commande et rendez-vous dans le répertoire du projet  
+
 3. Installer les dépendances du projet  
 ```
 composer install  
@@ -25,4 +27,9 @@ php bin/console doctrine:migrations:migrate
 6. générer les données pré-établies pour tester le projet  
 ```
 php bin/console doctrine:fixtures:load
+```
+
+7. Lancer le serveur local du projet
+```
+symfony server:start
 ```
