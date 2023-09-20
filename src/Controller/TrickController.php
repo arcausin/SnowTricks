@@ -42,7 +42,6 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trick->setCreatedAt(new \DateTimeImmutable());
-            $trick->setUser($this->getUser());
             $trick->setSlug($slugger->slug(strtolower($trick->getName())));
 
             $illustrationFile = $form->get('illustration')->getData();

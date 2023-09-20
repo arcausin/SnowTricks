@@ -97,7 +97,6 @@
 
             <div class="text-center text-white mb-3">
                 <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-snowboarding"></i> {{ trick.category }}</span>
-                <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-user"></i> {{ trick.user }}</span>
                 {% if trick.updatedAt %}
                     <span class="badge text-bg-light py-2 fs-6 mb-1"><i class="fas fa-calendar"></i> {{ trick.updatedAt|date('m/d/Y') }}</span>
                 {% else %}
