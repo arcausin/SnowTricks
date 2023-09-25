@@ -31,7 +31,9 @@ class MediaController extends AbstractController
             $entityManager->flush();
         }
 
-        $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $media->getTrick()->getSlug()]);
+        $this->addFlash('successMedia', 'Media deleted !');
+
+        $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $media->getTrick()->getSlug()]) . '#mediaSection';
         return $this->redirect($targetUrl);
     }
 

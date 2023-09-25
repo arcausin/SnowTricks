@@ -28,6 +28,8 @@ class CommentController extends AbstractController
             $entityManager->flush();
         }
 
+        $this->addFlash('successComment', 'Comment deleted !');
+
         $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $comment->getTrick()->getSlug()]) . '#commentSection';
         return $this->redirect($targetUrl);
     }

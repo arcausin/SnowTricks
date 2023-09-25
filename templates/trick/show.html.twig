@@ -6,7 +6,14 @@
 <div class="container">
     <div class="row">
         <div class="col-12 offset-md-2 col-md-8">
-            <div class="d-flex justify-content-between align-items-center py-3">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success alert-dismissible fade show mt-3 mb-0" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+
+            <div class="d-flex justify-content-between align-items-center my-3">
                 <h1 class="text-white fs-1 mb-0">{{ trick.name }}</h1>
 
                 {% if app.user %}
@@ -20,6 +27,8 @@
             </div>
 
             <img class="shadow img-fluid w-100 mb-3" src="{{ asset('uploads/illustrations/' ~ trick.illustration) }}" alt="">
+
+            <div id="mediaSection"></div>
 
             {% if app.user %}
             <button type="button" class="badge text-bg-success py-2 fs-6 border-0 mb-3" data-bs-toggle="modal" data-bs-target="#addMediaModal"><i class="fas fa-plus"></i> Add Media</button>
@@ -40,6 +49,13 @@
                 </div>
             </div>
             {% endif %}
+
+            {% for message in app.flashes('successMedia') %}
+                <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
 
             <div class="text-center">
                 <button type="button" class="badge text-bg-light py-2 fs-6 border-0 mb-3 d-md-none" id="toggleButton">See medias</button>
@@ -117,6 +133,13 @@
             <div id="commentSection"></div>
 
             {% if comments|length != 0 %}
+                {% for message in app.flashes('successComment') %}
+                    <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
+                        <i class="bi bi-check-circle-fill"></i> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                
                 <h2 class="text-center mb-3">List of comments</h2>
 
                 {% for comment in comments %}
@@ -152,6 +175,13 @@
                     </form>
                 {% endif %}
             {% else %}
+                {% for message in app.flashes('successComment') %}
+                    <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
+                        <i class="bi bi-check-circle-fill"></i> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+
                 <h2 class="text-center mb-3">No comments found</h2>
             {% endif %}
         </div>

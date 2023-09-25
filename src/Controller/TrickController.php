@@ -68,6 +68,8 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Trick created !');
+
             $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
             return $this->redirect($targetUrl);
         }
@@ -103,6 +105,8 @@ class TrickController extends AbstractController
 
             $entityManager->persist($comment);
             $entityManager->flush();
+
+            $this->addFlash('successComment', 'Comment added !');
 
             $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]) . '#commentSection';
             return $this->redirect($targetUrl);
@@ -154,7 +158,9 @@ class TrickController extends AbstractController
             $trick->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->flush();
 
-            $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
+            $this->addFlash('successMedia', 'Media added !');
+
+            $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]) . '#mediaSection';
             return $this->redirect($targetUrl);
 
         }
@@ -234,6 +240,8 @@ class TrickController extends AbstractController
 
             $entityManager->flush();
 
+            $this->addFlash('success', 'Trick updated !');
+
             $targetUrl = $this->generateUrl('app_trick_show', ['slug' => $trick->getSlug()]);
             return $this->redirect($targetUrl);
         }
@@ -273,7 +281,9 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_home');
+        $this->addFlash('success', 'Trick deleted !');
+
+        return $this->redirectToRoute('app_home', ['_fragment' => 'TrickSection']);
     }
 
     private function deleteIllustrationFile(Trick $trick): void

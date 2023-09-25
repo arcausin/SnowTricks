@@ -75,7 +75,9 @@ class ProfileController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Your profile has been updated.');
+
+            return $this->redirectToRoute('app_profile_edit', []);
         }
 
         return $this->renderForm('profile/edit.html.twig', [
